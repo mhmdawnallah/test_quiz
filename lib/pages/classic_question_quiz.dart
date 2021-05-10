@@ -1,7 +1,6 @@
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:test_quiz/enums/enums.dart';
 import 'package:test_quiz/pages/home_screen.dart';
@@ -13,7 +12,6 @@ import 'package:test_quiz/widgets/error_dialog.dart';
 import 'package:test_quiz/widgets/question_container.dart';
 
 class ClassicQuestionScreen extends StatefulWidget {
-
   @override
   _ClassicQuestionScreenState createState() => _ClassicQuestionScreenState();
 }
@@ -32,7 +30,6 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
   int time = 100;
   int intervalTime = 2;
   void addCorrectAnswer() {
-
     setState(() {
       correctlyAnswered = true;
       correctAnswers += 1;
@@ -41,8 +38,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
 
   void _answerQuestion(String answer) async {
     if (!showCorrect) {
-      if (audioQuizDetails[currentIndex].correctAnswer ==
-          answer) {
+      if (audioQuizDetails[currentIndex].correctAnswer == answer) {
         addCorrectAnswer();
         setState(() {
           showCorrect = true;
@@ -62,44 +58,40 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
     }
   }
 
-
-
   Future<bool> _handleBackPressed() {
     setState(() {
       paused = true;
     });
     var _time = time;
     return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: new Text('Are you sure?'),
-        content: new Text(
-          'If you stop the quiz and go back to main menu, you will lose the game.'
-
-          ,
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-              setState(() {
-                time = _time;
-                paused = false;
-              });
-            },
-            child: Text("No"),
-          ),
-          SizedBox(height: 16),
-          TextButton(
-            onPressed: () => Navigator.of(context).popUntil(
-              ModalRoute.withName('/mainMenu'),
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text(
+              'If you stop the quiz and go back to main menu, you will lose the game.',
             ),
-            child: Text("Yes"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  setState(() {
+                    time = _time;
+                    paused = false;
+                  });
+                },
+                child: Text("No"),
+              ),
+              SizedBox(height: 16),
+              TextButton(
+                onPressed: () => Navigator.of(context).popUntil(
+                  ModalRoute.withName('/mainMenu'),
+                ),
+                child: Text("Yes"),
+              ),
+            ],
           ),
-        ],
-      ),
-    ) as Future<bool>? ??
+        ) as Future<bool>? ??
         false as Future<bool>;
   }
 
@@ -114,7 +106,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
             .animate(animationController);
     timer = Timer.periodic(
       Duration(seconds: 1),
-          (Timer timer) {
+      (Timer timer) {
         if (!paused) {
           if (!answered) {
             if (time == 0 && !correctlyAnswered) {
@@ -128,8 +120,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
             setState(() {
               intervalTime = intervalTime - 1;
             });
-          } else if (currentIndex <
-              audioQuizDetails.length - 1 &&
+          } else if (currentIndex < audioQuizDetails.length - 1 &&
               intervalTime == 0) {
             if (showCorrect) {
               if (correctlyAnswered) {
@@ -140,10 +131,8 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
                   time = 15;
                   answered = false;
                   intervalTime = 2;
-                  if (currentIndex <
-                      audioQuizDetails.length - 1) {
+                  if (currentIndex < audioQuizDetails.length - 1) {
                     currentIndex = currentIndex + 1;
-
                   }
                 });
               }
@@ -181,14 +170,13 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
                 ),
                 child: Column(
                   children: [
-
                     Expanded(
                       child: Container(),
                       flex: 2,
                     ),
                     QuestionContainer(
                       //TODO Media - QuizType Passing To Question Container
-                      question:audioQuizDetails[currentIndex].question,
+                      question: audioQuizDetails[currentIndex].question,
                       media: audioQuizDetails[currentIndex].media,
                       quizType: audioQuizDetails[currentIndex].quizType,
                     ),
@@ -202,26 +190,29 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
                           onPressed: _answerQuestion,
                           showCorrect: showCorrect,
                           answer: audioQuizDetails[currentIndex].answer1,
-                          correctAnswer: audioQuizDetails[currentIndex].correctAnswer,
+                          correctAnswer:
+                              audioQuizDetails[currentIndex].correctAnswer,
                         ),
                         ClassicAnswerContainer(
-
                           onPressed: _answerQuestion,
                           showCorrect: showCorrect,
                           answer: audioQuizDetails[currentIndex].answer2,
-                          correctAnswer: audioQuizDetails[currentIndex].correctAnswer,
+                          correctAnswer:
+                              audioQuizDetails[currentIndex].correctAnswer,
                         ),
                         ClassicAnswerContainer(
                           onPressed: _answerQuestion,
                           showCorrect: showCorrect,
                           answer: audioQuizDetails[currentIndex].answer3,
-                          correctAnswer: audioQuizDetails[currentIndex].correctAnswer,
+                          correctAnswer:
+                              audioQuizDetails[currentIndex].correctAnswer,
                         ),
                         ClassicAnswerContainer(
                           onPressed: _answerQuestion,
                           showCorrect: showCorrect,
                           answer: audioQuizDetails[currentIndex].answer4,
-                          correctAnswer: audioQuizDetails[currentIndex].correctAnswer,
+                          correctAnswer:
+                              audioQuizDetails[currentIndex].correctAnswer,
                         ),
                       ],
                     ),
@@ -245,7 +236,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
                       child: Center(
                         child: BorderedText(
                           strokeColor:
-                          correctlyAnswered ? Colors.green : Colors.red,
+                              correctlyAnswered ? Colors.green : Colors.red,
                           strokeWidth: 4,
                           child: Text(
                             correctlyAnswered ? "Correct!" : "Wrong!",
@@ -269,6 +260,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
       ),
     );
   }
+
   void showErrorDialog({required BuildContext context, bool? exitsApp}) async {
     await showDialog(
       barrierDismissible: exitsApp != null && !exitsApp,
@@ -277,8 +269,7 @@ class _ClassicQuestionScreenState extends State<ClassicQuestionScreen>
         exitsApp: exitsApp,
         title: "Error",
         body:
-        "An error occurred while connecting to our servers. Please try again shortly"
-        ,
+            "An error occurred while connecting to our servers. Please try again shortly",
       ),
     );
   }
